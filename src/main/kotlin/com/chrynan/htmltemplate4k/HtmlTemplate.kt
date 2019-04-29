@@ -61,6 +61,9 @@ fun <VM : ViewModel> HtmlTemplateRenderer<VM>.renderToResponse(
 ): Response =
     Response(status).with(CONTENT_TYPE of contentType).body(invoke(viewModel))
 
-fun <VM : ViewModel> Body.Companion.viewModel(renderer: HtmlTemplateRenderer<VM>, contentType: ContentType) =
+fun <VM : ViewModel> Body.Companion.viewModel(
+    renderer: HtmlTemplateRenderer<VM>,
+    contentType: ContentType = TEXT_HTML
+) =
     string(contentType)
         .map<VM>({ throw UnsupportedOperationException("Cannot parse a ViewModel") }, renderer::invoke)
